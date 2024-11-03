@@ -56,7 +56,7 @@ public class EnemyAI : MonoBehaviour {
         RaycastHit hit;
 
         if (Physics.Raycast(transform.position + rayCastOffSet, direction, out hit, sightDistance)) {
-            if (hit.collider.gameObject.CompareTag("Player")) {
+            if (hit.collider.gameObject.tag == "Player") {
 
                 IsWalking = false;
 
@@ -73,6 +73,7 @@ public class EnemyAI : MonoBehaviour {
         }
 
         if (IsChasing == true) {
+
             dest = player.position;
             enemy.destination = dest;
             enemy.speed = chaseSpeed;
@@ -81,6 +82,8 @@ public class EnemyAI : MonoBehaviour {
 
                 player.gameObject.SetActive(false);
 
+                enemyAnimator.ResetTrigger("walk");
+                enemyAnimator.ResetTrigger("idle");
                 enemyAnimator.ResetTrigger("sprint");
                 enemyAnimator.SetTrigger("jumpscare");
 
@@ -107,6 +110,7 @@ public class EnemyAI : MonoBehaviour {
                 }
                 if (RANDOM_NUMBER2 == 1) {
 
+                    enemyAnimator.ResetTrigger("sprint");
                     enemyAnimator.ResetTrigger("walk");
                     enemyAnimator.SetTrigger("idle");
 
@@ -129,6 +133,7 @@ public class EnemyAI : MonoBehaviour {
         RANDOM_NUMBER = Random.Range(0, destinations.Count);
         currentDestination = destinations[RANDOM_NUMBER];
 
+        enemyAnimator.ResetTrigger("sprint");
         enemyAnimator.ResetTrigger("idle");
         enemyAnimator.SetTrigger("walk");
     }
@@ -145,6 +150,7 @@ public class EnemyAI : MonoBehaviour {
         RANDOM_NUMBER = Random.Range(0, destinations.Count);
         currentDestination = destinations[RANDOM_NUMBER];
 
+        enemyAnimator.ResetTrigger("idle");
         enemyAnimator.ResetTrigger("sprint");
         enemyAnimator.SetTrigger("walk");
     }
